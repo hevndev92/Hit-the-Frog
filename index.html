@@ -1,0 +1,114 @@
+<html>
+<head>
+    <title>Hit the Frog</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+
+<body style="background-color:#f5f5f5">
+    <p>Instruction: Try to hit as many frogs as you can! (Just beware there are spiders too)</p>
+    <p>You have hit <span style="color:green" id="frog_span">0</span> frog(s).</p>
+    <p>You have hit <span style="color:red" id="spider_span">0</span> spider(s).</p>
+</body>
+    
+<script>
+    do{
+        var size=prompt("Choose a number that is 8 or higher", 8);
+    }while(size<8||isNaN(size));
+    $("body").append("<table></table>");
+    for(var i=0;i<size;i++){
+        $("table").append("<tr></tr>");
+    }
+    for(var i=0;i<size;i++){
+        $("tr").append("<td></td>");
+    }
+    $("td").css({"width":"50px", "height":"50px", "background-color":"black"});
+    setInterval(function(){
+        if(Math.random()>0.5){
+            $("td").eq(Math.floor(Math.random()*$("td").length)).css({"background-color":"white"})
+            .append("<img src=\"img/frog.png\"></img>").addClass("target");            
+        }else{
+            $("td").eq(Math.floor(Math.random()*$("td").length)).css({"background-color":"white"})
+            .append("<img src=\"img/spider.png\"></img>").addClass("target");            
+        }
+        setTimeout(function(){
+            $("td").css({"background-color":"black"});
+            $("td").removeClass("target").empty();
+        }, 1000);
+    },1500+Math.random()*2000);
+    
+    $("td").click(function(){
+        if($(this).hasClass("target")){
+            if($(this).children().attr("src")=="img/frog.png"){
+                $("#frog_span").html(parseInt($("#frog_span").html(),10)+1);                      
+            }else{
+                $("#spider_span").html(parseInt($("#spider_span").html(),10)+1);      
+            }
+            $(this).removeClass("target").empty();
+        }
+    });
+    
+    /*var array=["cm", "furion", "medusa", "puck", "razor", "ta", "tinker", "viper"];
+    
+    for(var i=0;i<8;i++){
+        $("#possible_p").append("<img src=\"img/"+array[i]+".png\"></img>");
+    }
+    
+    do{
+        var size=prompt("Choose a number that is multiple of 4", 4);
+    }while(size<4||size%4!=0||isNaN(size));
+    
+    
+    var blurb=[];
+    for(var i=0;i<size*size/8;i++){
+        var blurb=blurb.concat(array);        
+    }
+    shuffle(blurb);
+    function shuffle(o){ //v1.0
+        for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+        return o;
+    };
+    
+
+    
+    $("body").append("<table></table>").append("<p>(Warning: Do not click too quickly after opening 2 cards!)</p>");
+    for(var i=0;i<size;i++){
+        $("table").append("<tr></tr>");
+    }
+    for(var i=0;i<size;i++){
+        $("tr").append("<td></td>");
+    }
+    $("td").css({"width":"50px", "height":"50px", "background-color":"black"});
+    $("td[class!='solved']").click(function(){
+        if($(this).children().length==0){
+            $(this).append("<img src=\"img/"+blurb[$("td").index($(this))]+".png\"></img>"); 
+            $("#score_span").html(parseInt($("#score_span").html(),10)+1);
+            $(this).css({"background-color":"transparent"}); 
+            $(this).addClass("selected");
+        }
+    });
+    function reset(){
+        $("td[class!='solved']").removeClass("selected");
+        $("td[class!='solved']").empty();
+        $("td[class!='solved']").css({"background-color":"black"});
+    }
+    setInterval(function(){
+        if($("td[class='selected']").length==2){
+            var x=$("td[class='selected']").eq(0);
+            var y=$("td[class='selected']").eq(1);
+            if(x.find("img").attr("src") == y.find("img").attr("src")){
+                x.addClass("solved");
+                x.removeClass("selected");
+                y.addClass("solved");
+                y.removeClass("selected");
+                $("#solve_span").html(parseInt($("#solve_span").html(),10)+1);
+                if($("#solve_span").html()==size*size/2){
+                    alert("Game over! Your score is "+$("#score_span").html()+" moves.");
+                }
+            }
+            x.removeClass("selected");
+            y.removeClass("selected");
+            setTimeout(reset, 500);
+        }
+    }, 17);*/
+</script>
+</html>
